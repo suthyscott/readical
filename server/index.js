@@ -1,7 +1,8 @@
 require('dotenv').config()
 const express = require('express')
+const session = require('express-session')
 const cors = require('cors')
-const {SERVER_PORT} = process.env
+const {SERVER_PORT, SECRET} = process.env
 
 // DB imports
 const {sequelize} = require('./util/database')
@@ -22,16 +23,25 @@ Topic.hasMany(BookTopic)
 BookTopic.belongsTo(Topic)
 
 // Controller imports
-const {register, login} = require('./controllers/authCtrl')
+const {register, login, checkUser} = require('./controllers/authCtrl')
 
 const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(session({
+    secret: SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 48
+    }
+}))
 
 
 app.post('/api/register', register)
 app.post('/api/login', login)
+app.get('/api/user', checkUser)
 
 
 sequelize.sync()

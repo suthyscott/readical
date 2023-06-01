@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 
 module.exports = {
     register: async (req, res) => {
-        console.log('hit register')
+        console.log('hit register', req.session)
         try{
             const {username, password} = req.body
 
@@ -19,9 +19,12 @@ module.exports = {
                     hashedPass: hash
                 })
 
-                res.status(200).send({
-                    userId: newUser.dataValues.id
-                })
+                req.session.user = {
+                    userId: newUser.dataValues.id,
+                    username: newUser.dataValues.username
+                }
+
+                res.status(200).send(req.session.user)
             }
         } catch(theseHands){
             console.log(theseHands)
@@ -29,7 +32,7 @@ module.exports = {
         }
     },
     login: async (req, res) => {
-        console.log('hit login')
+        console.log('hit login', req.session)
         try{
             const {username, password} = req.body
 
@@ -39,9 +42,12 @@ module.exports = {
                 const isAuthenticated = bcrypt.compareSync(password, foundUser.hashedPass)
 
                 if(isAuthenticated){
-                    res.status(200).send({
-                        userId: foundUser.dataValues.id
-                    })
+                    req.session.user = {
+                        userId: foundUser.dataValues.id,
+                        username: foundUser.dataValues.username
+                    }
+    
+                    res.status(200).send(req.session.user)
                 } else {
                     res.status(400).send('That password is incorrect')
                 }
@@ -52,5 +58,9 @@ module.exports = {
             console.log(theseHands)
             res.sendStatus(500)
         }
+    },
+    checkUser: (req, res) => {
+        console.log(req.session)
+        res.status(200).send(req.session.user)
     }
 }
