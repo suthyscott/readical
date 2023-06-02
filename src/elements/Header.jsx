@@ -1,18 +1,13 @@
 import { NavLink } from "react-router-dom"
-import { useEffect, useState } from "react"
-import axios from 'axios'
+import { useEffect, useState, useContext } from "react"
+import AuthContext from "../store/authContext"
+
 
 const Header = () => {
-  const [user, setUser] = useState({})
-
-  useEffect(() => {
-    axios.get('/api/user')
-      .then(res => setUser(res.data))
-      .catch(err => console.log(err))
-  }, [])
+  const {userId} = useContext(AuthContext)
 
   return (
-    user.userId ? (
+    userId ? (
       <nav>
         <NavLink to='/'>Landing</NavLink>
         <NavLink to='/home'>Home</NavLink>

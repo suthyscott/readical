@@ -61,6 +61,10 @@ module.exports = {
     },
     checkUser: (req, res) => {
         console.log(req.session)
-        res.status(200).send(req.session.user)
+        if(req.session.user){
+            res.status(200).send(req.session.user)
+        } else {
+            res.status(400).send('No user found')
+        }
     }
 }
