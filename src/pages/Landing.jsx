@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react"
+import { useState, useContext } from "react"
 import axios from "axios"
+import AuthContext from "../store/authContext"
 
 const Landing = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [register, setRegister] = useState(false)
+    const {login} = useContext(AuthContext)
 
     const handleSubmit = e => {
         e.preventDefault()
@@ -13,7 +15,7 @@ const Landing = () => {
                 username,
                 password
             })
-            .then(res => console.log(res))
+            .then(res => login(res.data.userId))
             .catch(err => console.log(err))
     }
     return (
