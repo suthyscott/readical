@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import AuthContext from "../store/authContext"
+import '../css/Landing.css'
 
 const Landing = () => {
     const [username, setUsername] = useState("")
@@ -21,7 +22,7 @@ const Landing = () => {
             .catch(err => console.log(err))
     }
     return (
-        <>
+        <main id="landing-container">
             {register ? (
                 <form onSubmit={e => handleSubmit(e)}>
                     <input
@@ -50,7 +51,7 @@ const Landing = () => {
             <button onClick={() => setRegister(!register)}>
                 Need to {register ? "log in?" : "register?"}
             </button>
-        </>
+        </main>
     )
 }
 
