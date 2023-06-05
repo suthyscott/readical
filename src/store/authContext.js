@@ -14,7 +14,11 @@ export const AuthContextProvider = props => {
         setUserId(userId)
     }
 
-    const logout = () => {}
+    const logout = () => {
+        axios.post('/api/logout')
+            .then(res => setUserId(null))
+            .catch(err => console.log(err))
+    }
 
     const contextValue = {
         userId,

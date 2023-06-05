@@ -4,14 +4,15 @@ import AuthContext from "../store/authContext"
 
 
 const Header = () => {
-  const {userId} = useContext(AuthContext)
+  const {userId, logout} = useContext(AuthContext)
 
   return (
     userId ? (
-      <nav>
+      <nav className='flex justify-between'>
         <NavLink to='/'>Landing</NavLink>
         <NavLink to='/home'>Home</NavLink>
         <NavLink to='/addBook'>Add a new book</NavLink>
+        <button onClick={logout}>Logout</button>
     </nav>
     ) : null
   )

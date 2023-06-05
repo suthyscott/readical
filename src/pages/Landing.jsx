@@ -8,7 +8,7 @@ const Landing = () => {
     const [password, setPassword] = useState("")
     const [register, setRegister] = useState(false)
     const authCtx = useContext(AuthContext)
-    console.log(authCtx)
+
     const handleSubmit = e => {
         e.preventDefault()
         axios

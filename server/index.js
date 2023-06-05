@@ -23,7 +23,7 @@ Topic.hasMany(BookTopic)
 BookTopic.belongsTo(Topic)
 
 // Controller imports
-const {register, login, checkUser} = require('./controllers/authCtrl')
+const {register, login, checkUser, logout} = require('./controllers/authCtrl')
 
 const app = express()
 
@@ -42,6 +42,7 @@ app.use(session({
 app.post('/api/register', register)
 app.post('/api/login', login)
 app.get('/api/user', checkUser)
+app.post('/api/logout', logout)
 
 
 sequelize.sync()
