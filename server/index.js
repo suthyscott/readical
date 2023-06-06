@@ -25,6 +25,7 @@ BookTopic.belongsTo(Topic)
 // Controller imports
 const {register, login, checkUser, logout} = require('./controllers/authCtrl')
 const {addNewBook} = require('./controllers/booksCtrl')
+const {getAllTopics} = require('./controllers/topicCtrl')
 
 const app = express()
 
@@ -46,6 +47,8 @@ app.get('/api/user', checkUser)
 app.post('/api/logout', logout)
 
 app.post('/api/books', addNewBook)
+
+app.get('/api/topics', getAllTopics)
 
 
 sequelize.sync()
