@@ -4,7 +4,7 @@ const { BookTopic } = require("../models/bookTopic")
 module.exports = {
     addNewBook: async (req, res) => {
         try {
-            const { title, length, author, desc, priority, userId, topics } =
+            const { title, length, author, desc, priority, userId, selectedTopics } =
                 req.body
 
             const newBook = await Book.create({
@@ -16,7 +16,7 @@ module.exports = {
                 userId
             })
 
-            topics.forEach(async id => {
+            selectedTopics.forEach(async id => {
                 await BookTopic.create({ bookId: newBook.id, topicId: id })
             })
 
