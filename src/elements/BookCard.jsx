@@ -1,8 +1,10 @@
 import React from 'react'
 
-const BookCard = () => {
+const BookCard = ({book}) => {
   return (
-    <div>BookCard</div>
+    <div>
+      <h2>{book.title}</h2>
+    </div>
   )
 }
 
