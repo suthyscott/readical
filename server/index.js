@@ -24,7 +24,7 @@ BookTopic.belongsTo(Topic)
 
 // Controller imports
 const {register, login, checkUser, logout} = require('./controllers/authCtrl')
-const {addNewBook, getUserBooks} = require('./controllers/booksCtrl')
+const {addNewBook, getUserBooks, getBookDeets} = require('./controllers/booksCtrl')
 const {getAllTopics} = require('./controllers/topicCtrl')
 
 const app = express()
@@ -48,6 +48,7 @@ app.post('/api/logout', logout)
 
 app.post('/api/books', addNewBook)
 app.get('/api/books/:userId', getUserBooks)
+app.get('/api/book/:bookId', getBookDeets)
 
 app.get('/api/topics', getAllTopics)
 

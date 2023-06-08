@@ -64,5 +64,36 @@ module.exports = {
             console.log(err)
             res.sendStatus(500)
         }
+    },
+    getBookDeets: async (req, res) => {
+        try{
+            const {bookId} = req.params
+
+            const book = await Book.findOne({
+                where: {id: bookId},
+                include: [
+                    {
+                        model: User,
+                        attributes: ["username", "id"]
+                    },
+                    {
+                        model: BookTopic,
+                        attributes: ["id"],
+                        include: [
+                            {
+                                model: Topic,
+                                attributes: ["id", "topicName"]
+                            }
+                        ]
+                    }
+                ]
+            })
+
+            res.status(200).send(book)
+
+        }catch(err){
+            console.log(err)
+            res.status(400).send("no book found")
+        }
     }
 }
