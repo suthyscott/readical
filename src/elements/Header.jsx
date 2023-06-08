@@ -8,11 +8,10 @@ const Header = () => {
 
   return (
     userId ? (
-      <nav className='flex justify-between'>
-        <NavLink to='/'>Landing</NavLink>
-        <NavLink to='/home'>Home</NavLink>
-        <NavLink to='/addBook'>Add a new book</NavLink>
-        <button onClick={logout}>Logout</button>
+      <nav className='flex justify-center items-center h-[10vh] bg-secondary'>
+        <NavLink to='/home' className='mx-10'>Home</NavLink>
+        <NavLink to='/addBook' className='mx-10'>Add a new book</NavLink>
+        <button onClick={logout} className='mx-10'>Logout</button>
     </nav>
     ) : null
   )
