@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react"
 import axios from "axios"
 import AuthContext from "../store/authContext"
 import CheckBox from "../elements/CheckBox"
+import { useNavigate } from "react-router-dom"
 
 const AddBook = () => {
     const [topics, setTopics] = useState([])
@@ -11,7 +12,10 @@ const AddBook = () => {
     const [author, setAuthor] = useState("")
     const [desc, setDesc] = useState("")
     const [priority, setPriority] = useState(null)
+    const [imgUrl, setImgUrl] = useState("")
+    const [progress, setProgress] = useState(null)
     const { userId } = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const getTopics = () => {
         axios
@@ -25,33 +29,36 @@ const AddBook = () => {
     useEffect(getTopics, [])
 
     const handleSelectTopic = top => {
-      console.log('hit handle select', top)
-      setSelectedTopics([...selectedTopics, top.id])
+        console.log("hit handle select", top)
+        setSelectedTopics([...selectedTopics, top.id])
     }
 
     const handleUnselectTopic = top => {
-      console.log('hit handle unselect', top)
-      const index = selectedTopics.findIndex(topId => topId === top.id)
-      console.log(index)
-      selectedTopics.splice(index, 1)
-      setSelectedTopics([...selectedTopics])
+        console.log("hit handle unselect", top)
+        const index = selectedTopics.findIndex(topId => topId === top.id)
+        console.log(index)
+        selectedTopics.splice(index, 1)
+        setSelectedTopics([...selectedTopics])
     }
 
     const handleSubmitForm = e => {
-      e.preventDefault()
-      const body = {
-        title,
-        author,
-        length,
-        desc,
-        priority,
-        selectedTopics,
-        userId
-      }
+        e.preventDefault()
+        const body = {
+            title,
+            author,
+            length,
+            desc,
+            priority,
+            imgUrl,
+            progress,
+            selectedTopics,
+            userId
+        }
 
-      axios.post('/api/books', body)
-        .then(res => console.log(res.data))
-        .catch(err => console.log(err))
+        axios
+            .post("/api/books", body)
+            .then(res => navigate(`/details/${res.data.id}`))
+            .catch(err => console.log(err))
     }
 
     console.log(selectedTopics)
@@ -79,6 +86,16 @@ const AddBook = () => {
                     placeholder="Reading priority"
                     type="number"
                     onChange={e => setPriority(e.target.value)}
+                />
+                <input
+                    placeholder="Image URL"
+
+                    onChange={e => setImgUrl(e.target.value)}
+                />
+                <input
+                    placeholder="Pages read"
+                    type="number"
+                    onChange={e => setProgress(e.target.value)}
                 />
                 {topics.map(top => (
                     <CheckBox

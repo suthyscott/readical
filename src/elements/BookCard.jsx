@@ -9,6 +9,7 @@ const BookCard = ({book}) => {
       <p>{book.author}</p>
       <p>{book.length} pages</p>
       <p>{book.desc}</p>
+      <p>Reading priority:{book.priority}</p>
       <button onClick={() => navigate(`/details/${book.id}`)}>See more book details</button>
     </div>
   )

@@ -13,6 +13,8 @@ module.exports = {
         length: DataTypes.INTEGER,
         author: DataTypes.STRING,
         desc: DataTypes.STRING(2000),
-        priority: DataTypes.INTEGER
+        priority: DataTypes.INTEGER,
+        imgUrl: DataTypes.TEXT,
+        progress: DataTypes.INTEGER
     })
 }
