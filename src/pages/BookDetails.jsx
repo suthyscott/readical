@@ -1,9 +1,10 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import axios from "axios"
 
 const BookDetails = () => {
     const { bookId } = useParams()
+    const navigate = useNavigate()
     const [book, setBook] = useState({})
     const [editing, setEditing] = useState(false)
     const [progress, setProgress] = useState(null)
@@ -31,6 +32,15 @@ const BookDetails = () => {
                 setProgress(res.data.progress)
             })
             .catch(err => console.log(err))
+    }
+
+    const deleteBook = () => {
+      axios.delete(`/api/book/${book.id}`)
+        .then(res => {
+          console.log(res)
+          navigate('/home')
+        })
+        .catch(err => console.log(err))
     }
 
     return (
@@ -65,6 +75,8 @@ const BookDetails = () => {
                     return <p>{top.topic.topicName}</p>
                 })}
             </div>
+
+            <button onClick={deleteBook}>Delete Book</button>
         </div>
     )
 }

@@ -129,5 +129,16 @@ module.exports = {
             console.log(err)
             res.status(400).send("no book found")
         }
+    },
+    deleteBook: async (req, res) => {
+        try{
+            const {bookId} = req.params
+            await Book.destroy({where: {id: bookId}})
+            res.sendStatus(200)
+
+        } catch(err) {
+            console.log(err)
+            res.status(400).send('cannot delete book')
+        }
     }
 }
